@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 
-type Audience = {
+interface Audience {
   id: string
   direction: string
   href: Route
@@ -11,7 +11,8 @@ type Audience = {
   role: string
   quote: string
   initial: string
-  cta: string
+  ctaLabel: string
+  imageUrl?: string
 }
 
 const AUDIENCES: Audience[] = [
@@ -26,7 +27,8 @@ const AUDIENCES: Audience[] = [
     quote:
       'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии.',
     initial: 'А',
-    cta: 'Перейти в каталог →',
+    ctaLabel: 'Перейти в каталог',
+    imageUrl: '/images/audiences/cafe_owner.jpg',
   },
   {
     id: 'academy',
@@ -39,7 +41,8 @@ const AUDIENCES: Audience[] = [
     quote:
       'После мастер-класса я переделала всю линейку тортов. Гости заметили сразу.',
     initial: 'Р',
-    cta: 'Смотреть расписание →',
+    ctaLabel: 'Смотреть Академию',
+    imageUrl: '/images/audiences/chef_conditer.jpg',
   },
   {
     id: 'consulting',
@@ -52,7 +55,8 @@ const AUDIENCES: Audience[] = [
     quote:
       'Снизили фудкост с 38% до 28%. Меню и техкарты пересобрали за три месяца.',
     initial: 'Д',
-    cta: 'Обсудить проект →',
+    ctaLabel: 'Обсудить проект',
+    imageUrl: '/images/audiences/manager1.jpg',
   },
   {
     id: 'club',
@@ -65,13 +69,17 @@ const AUDIENCES: Audience[] = [
     quote:
       'Здесь не продают — здесь делятся. Реальные решения от тех, кто уже прошёл этот путь.',
     initial: 'В',
-    cta: 'Вступить в клуб →',
+    ctaLabel: 'Вступить в сообщество',
+    imageUrl: '/images/audiences/boss1.jpg',
   },
 ]
 
 export function HeroAudiences() {
   return (
-    <div className="grid grid-cols-1 gap-[3px] bg-sand md:grid-cols-2 lg:grid-cols-4">
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+      style={{ gap: '3px', background: 'var(--c-sand)' }}
+    >
       {AUDIENCES.map((a, i) => (
         <AudienceCard key={a.id} audience={a} index={i} />
       ))}
@@ -86,82 +94,115 @@ function AudienceCard({
   audience: Audience
   index: number
 }) {
-  const delayClass = ['appear', 'appear-d1', 'appear-d2', 'appear-d3'][index] ?? 'appear'
+  const delayClass =
+    ['appear', 'appear-d1', 'appear-d2', 'appear-d3'][index] ?? 'appear'
 
   return (
     <Link
       href={a.href}
-      className={`group relative flex flex-col justify-between overflow-hidden ${delayClass}`}
-      style={{
-        background: a.colorL2,
-        minHeight: 'clamp(280px, 45vh, 520px)',
-        padding: 'clamp(20px, 3vw, 28px)',
-      }}
+      className={`group relative flex cursor-pointer flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1 ${delayClass}`}
+      style={{ minHeight: 'clamp(480px, 55vh, 640px)' }}
     >
-      <span
-        className="pointer-events-none absolute right-5 top-4 select-none font-main font-black"
-        style={{
-          fontSize: 'clamp(80px, 12vw, 140px)',
-          lineHeight: '1',
-          color: 'rgba(0,0,0,0.07)',
-          letterSpacing: '-0.02em',
-        }}
-        aria-hidden="true"
-      >
-        {a.initial}
-      </span>
+      <div className="relative flex-shrink-0" style={{ height: '62%' }}>
+        <div
+          className="absolute inset-0 h-full w-full"
+          style={{ background: a.colorL2 }}
+        >
+          <div className="flex h-full w-full items-center justify-center">
+            <span
+              className="select-none font-main font-black"
+              style={{
+                fontSize: 'clamp(120px, 18vw, 200px)',
+                lineHeight: '1',
+                color: 'rgba(0,0,0,0.10)',
+                letterSpacing: '-0.02em',
+              }}
+              aria-hidden="true"
+            >
+              {a.initial}
+            </span>
+          </div>
 
-      <div className="relative z-10">
+          {a.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={a.imageUrl}
+              alt={a.name}
+              className="absolute inset-0 h-full w-full object-cover object-top"
+            />
+          )}
+        </div>
+
+        <div
+          className="absolute bottom-0 left-0 right-0"
+          style={{
+            height: '55%',
+            background:
+              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 40%, #ffffff 80%, #ffffff 100%)',
+          }}
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="relative -mt-8 flex flex-1 flex-col bg-white px-6 pb-0">
         <span
-          className="mb-2 block font-sub text-[8px] font-light uppercase tracking-[0.28em]"
-          style={{ color: 'rgba(0,0,0,0.45)' }}
+          className="mb-3 block font-sub font-light uppercase"
+          style={{
+            fontSize: '8px',
+            letterSpacing: '0.28em',
+            color: a.colorL1,
+          }}
         >
           {a.direction}
         </span>
-      </div>
 
-      <div className="relative z-10">
         <blockquote
-          className="mb-5 font-main font-medium leading-snug text-ink"
-          style={{ fontSize: 'clamp(14px, 1.4vw, 18px)' }}
+          className="mb-4 flex-1 font-main leading-snug text-ink"
+          style={{ fontSize: 'clamp(14px, 1.3vw, 17px)', fontWeight: 500 }}
         >
           «{a.quote}»
         </blockquote>
 
-        <div className="mb-5 flex items-center gap-3">
-          <div
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-[13px] font-black text-white"
+        <div className="mb-5 flex items-center gap-2">
+          <span
+            className="h-2 w-2 flex-shrink-0 rounded-full"
             style={{ background: a.colorL1 }}
-          >
-            {a.initial}
-          </div>
+          />
 
           <div>
-            <span className="block text-[13px] font-bold leading-tight text-ink">
+            <span
+              className="block font-bold text-ink"
+              style={{ fontSize: '13px', lineHeight: '1.2' }}
+            >
               {a.name}
             </span>
             <span
-              className="mt-0.5 block text-[11px]"
-              style={{ color: 'rgba(0,0,0,0.45)' }}
+              className="mt-0.5 block"
+              style={{ fontSize: '11px', color: 'rgba(0,0,0,0.40)' }}
             >
               {a.role}
             </span>
           </div>
         </div>
 
-        <span
-          className="font-main text-[9px] font-bold uppercase tracking-[0.20em] transition-all duration-200 group-hover:tracking-[0.28em]"
-          style={{ color: a.colorL1 }}
+        <div
+          className="-mx-6 mt-auto flex items-center justify-between px-6 py-4 transition-all duration-200 group-hover:brightness-95"
+          style={{ background: a.colorL1 }}
         >
-          {a.cta}
-        </span>
+          <span
+            className="font-main font-bold uppercase text-white"
+            style={{ fontSize: '10px', letterSpacing: '0.22em' }}
+          >
+            {a.ctaLabel}
+          </span>
+          <span
+            className="font-bold text-white transition-transform duration-200 group-hover:translate-x-1"
+            style={{ fontSize: '16px' }}
+          >
+            →
+          </span>
+        </div>
       </div>
-
-      <div
-        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: 'rgba(0,0,0,0.04)' }}
-        aria-hidden="true"
-      />
     </Link>
   )
 }
