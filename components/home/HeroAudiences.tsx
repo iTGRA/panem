@@ -137,18 +137,19 @@ function AudienceCard({
         </div>
 
         <div
-          className="absolute left-0 right-0"
+          className="absolute left-0 right-0 backdrop-blur-md"
           style={{
             bottom: '64px',
             height: '75px',
             background:
               'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.7) 60%, #ffffff 100%)',
+            WebkitBackdropFilter: 'blur(12px)',
           }}
           aria-hidden="true"
         />
       </div>
 
-      <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-0 pt-5">
+      <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-7 pt-5">
         <span
           className="mb-5 block font-sub font-light uppercase"
           style={{
@@ -188,21 +189,23 @@ function AudienceCard({
           </span>
         </div>
 
-        <div
-          className="-mx-7 mt-auto flex items-center justify-center gap-2 px-7 py-4 transition-all duration-200 group-hover:brightness-95"
-          style={{ background: a.colorL1 }}
-        >
+        <div className="mt-auto flex justify-center">
           <span
-            className="font-main font-bold uppercase text-white"
-            style={{ fontSize: '10px', letterSpacing: '0.22em' }}
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 transition-all duration-200 group-hover:brightness-95"
+            style={{ background: a.colorL1 }}
           >
-            {a.ctaLabel}
-          </span>
-          <span
-            className="font-bold text-white transition-transform duration-200 group-hover:translate-x-1"
-            style={{ fontSize: '16px' }}
-          >
-            →
+            <span
+              className="font-main font-bold uppercase text-white"
+              style={{ fontSize: '11px', letterSpacing: '0.20em' }}
+            >
+              {a.ctaLabel}
+            </span>
+            <span
+              className="font-bold text-white transition-transform duration-200 group-hover:translate-x-0.5"
+              style={{ fontSize: '14px' }}
+            >
+              →
+            </span>
           </span>
         </div>
       </div>
