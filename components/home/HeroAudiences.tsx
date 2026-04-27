@@ -13,6 +13,7 @@ interface Audience {
   quote: string
   initial: string
   ctaLabel: string
+  ctaLabelLong: string
   imageUrl?: string
 }
 
@@ -30,6 +31,7 @@ const AUDIENCES: Audience[] = [
       'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии.',
     initial: 'А',
     ctaLabel: 'Перейти',
+    ctaLabelLong: 'Перейти в каталог',
     imageUrl: '/images/audiences/cafe_owner.jpg',
   },
   {
@@ -45,6 +47,7 @@ const AUDIENCES: Audience[] = [
       'После мастер-класса я переделала всю линейку тортов. Гости заметили сразу.',
     initial: 'Р',
     ctaLabel: 'Смотреть',
+    ctaLabelLong: 'Получить знания',
     imageUrl: '/images/audiences/chef_conditer.jpg',
   },
   {
@@ -60,6 +63,7 @@ const AUDIENCES: Audience[] = [
       'Снизили фудкост с 38% до 28%. Меню и техкарты пересобрали за три месяца.',
     initial: 'Д',
     ctaLabel: 'Обсудить',
+    ctaLabelLong: 'Получить консультацию',
     imageUrl: '/images/audiences/manager1.jpg',
   },
   {
@@ -75,6 +79,7 @@ const AUDIENCES: Audience[] = [
       'Здесь не продают — здесь делятся. Реальные решения от тех, кто уже прошёл этот путь.',
     initial: 'В',
     ctaLabel: 'Вступить',
+    ctaLabelLong: 'Вступить',
     imageUrl: '/images/audiences/boss1.jpg',
   },
 ]
@@ -241,60 +246,72 @@ function ColorCard({ audience: a, index }: { audience: Audience; index: number }
           {a.heading}
         </h3>
 
-        <div className="mt-auto">
-          <blockquote
-            className="mb-5 font-main leading-snug text-ink"
+        <blockquote className="mt-6">
+          <span
+            className="block font-main font-black leading-none"
+            style={{
+              fontSize: '72px',
+              color: 'rgba(0,0,0,0.18)',
+              letterSpacing: '-0.05em',
+              marginBottom: '-14px',
+            }}
+            aria-hidden="true"
+          >
+            «
+          </span>
+          <span
+            className="block font-main leading-snug text-ink"
             style={{ fontSize: 'clamp(13px, 1.1vw, 15px)', fontWeight: 500 }}
           >
-            «{a.quote}»
-          </blockquote>
+            {a.quote}
+          </span>
+        </blockquote>
 
-          <div className="mb-6 flex items-center gap-3">
-            <div
-              className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-white"
-              style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.6)' }}
-            >
-              {a.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={a.imageUrl}
-                  alt={a.name}
-                  className="h-full w-full object-cover"
-                />
-              )}
-            </div>
-            <div>
-              <span
-                className="block font-bold text-ink"
-                style={{ fontSize: '13px', lineHeight: '1.2' }}
-              >
-                {a.name}
-              </span>
-              <span
-                className="mt-0.5 block"
-                style={{ fontSize: '11px', color: 'rgba(0,0,0,0.55)' }}
-              >
-                {a.role}
-              </span>
-            </div>
+        <div className="mt-5 flex items-center gap-3">
+          <div
+            className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-white"
+            style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.6)' }}
+          >
+            {a.imageUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={a.imageUrl}
+                alt={a.name}
+                className="h-full w-full object-cover"
+              />
+            )}
           </div>
-
-          <div className="flex justify-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-3 transition-transform duration-200 group-hover:scale-105">
-              <span
-                className="font-main font-bold uppercase text-ink"
-                style={{ fontSize: '10px', letterSpacing: '0.14em' }}
-              >
-                {a.ctaLabel}
-              </span>
-              <span
-                className="font-bold text-ink transition-transform duration-200 group-hover:translate-x-0.5"
-                style={{ fontSize: '13px' }}
-              >
-                →
-              </span>
+          <div>
+            <span
+              className="block font-bold text-ink"
+              style={{ fontSize: '13px', lineHeight: '1.2' }}
+            >
+              {a.name}
+            </span>
+            <span
+              className="mt-0.5 block"
+              style={{ fontSize: '11px', color: 'rgba(0,0,0,0.55)' }}
+            >
+              {a.role}
             </span>
           </div>
+        </div>
+
+        <div className="mt-auto flex justify-center pt-8">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 transition-transform duration-200 group-hover:scale-105">
+            <span
+              className="font-main font-bold uppercase text-ink"
+              style={{ fontSize: '10px', letterSpacing: '0.10em' }}
+            >
+              {a.ctaLabelLong}
+            </span>
+            <span
+              className="font-bold text-ink transition-transform duration-200 group-hover:translate-x-0.5"
+              style={{ fontSize: '13px' }}
+            >
+              →
+            </span>
+          </span>
         </div>
       </div>
     </Link>
