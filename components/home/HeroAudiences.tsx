@@ -14,6 +14,7 @@ interface Audience {
   initial: string
   ctaLabel: string
   ctaLabelLong: string
+  usps: string[]
   imageUrl?: string
 }
 
@@ -32,6 +33,7 @@ const AUDIENCES: Audience[] = [
     initial: 'А',
     ctaLabel: 'Перейти',
     ctaLabelLong: 'Перейти в каталог',
+    usps: ['Более 2500 SKU', '50 производителей', 'Правильное хранение', 'Доставка'],
     imageUrl: '/images/audiences/cafe_owner.jpg',
   },
   {
@@ -48,6 +50,7 @@ const AUDIENCES: Audience[] = [
     initial: 'Р',
     ctaLabel: 'Смотреть',
     ctaLabelLong: 'Получить знания',
+    usps: ['Демо-зона', 'Мастер-классы', 'Обучение', 'База знаний'],
     imageUrl: '/images/audiences/chef_conditer.jpg',
   },
   {
@@ -64,6 +67,7 @@ const AUDIENCES: Audience[] = [
     initial: 'Д',
     ctaLabel: 'Обсудить',
     ctaLabelLong: 'Получить консультацию',
+    usps: ['Запуск проекта', 'Перезапуск', 'Оптимизация', 'Масштабирование'],
     imageUrl: '/images/audiences/manager1.jpg',
   },
   {
@@ -80,6 +84,7 @@ const AUDIENCES: Audience[] = [
     initial: 'В',
     ctaLabel: 'Вступить',
     ctaLabelLong: 'Вступить',
+    usps: ['Мероприятия', 'Нетворкинг', 'Более 300 профессионалов'],
     imageUrl: '/images/audiences/boss1.jpg',
   },
 ]
@@ -358,13 +363,14 @@ function ColorCard({ audience: a, index }: { audience: Audience; index: number }
       style={{ ...CARD_SHELL, background: a.colorL2 }}
     >
       <div className="flex flex-1 flex-col px-7 pb-7 pt-9">
-        {/* Top zone: primitive ornament unique per direction */}
-        <div className="relative -mx-7 -mt-9 flex-1 overflow-hidden">
+        {/* Top zone: primitive ornament unique per direction (fades on hover) */}
+        <div className="relative -mx-7 -mt-9 flex-1 overflow-hidden transition-opacity duration-300 ease-out group-hover:opacity-30">
           <Ornament id={a.id} />
         </div>
 
-        {/* Bottom zone: heading + quote + persona + CTA stacked compactly */}
-        <div className="pt-6">
+        {/* Bottom zone: heading + quote + persona + CTA stacked compactly,
+            slides up on hover to expose the USP list below */}
+        <div className="relative z-10 pt-6 transition-transform duration-300 ease-out group-hover:-translate-y-[150px]">
           <h3
             className="font-main font-black text-ink"
             style={{
@@ -444,6 +450,28 @@ function ColorCard({ audience: a, index }: { audience: Audience; index: number }
               </span>
             </span>
           </div>
+        </div>
+
+        {/* USPs — fade in at the bottom on hover, content above shifts up */}
+        <div
+          className="pointer-events-none absolute inset-x-7 bottom-7 translate-y-3 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          <ul className="space-y-2.5">
+            {a.usps.map((usp) => (
+              <li
+                key={usp}
+                className="flex items-center gap-2.5 font-main font-medium text-ink"
+                style={{ fontSize: '13px', lineHeight: '1.3' }}
+              >
+                <span
+                  className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                  style={{ background: ORNAMENT_COLOR[a.id] ?? '#000' }}
+                  aria-hidden="true"
+                />
+                <span>{usp}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Link>
