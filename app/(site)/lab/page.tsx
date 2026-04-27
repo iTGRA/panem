@@ -647,9 +647,16 @@ export default function LabPage() {
 
         <div className="mt-8">
           <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-mist">
-            Hero Audiences — новый компонент
+            Hero Audiences · вариант 1 (фото)
           </p>
-          <HeroAudiences />
+          <HeroAudiences variant="photo" />
+        </div>
+
+        <div className="mt-12">
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-mist">
+            Hero Audiences · вариант 2 (цвет, эксперимент)
+          </p>
+          <HeroAudiences variant="color" />
         </div>
       </Section>
 
