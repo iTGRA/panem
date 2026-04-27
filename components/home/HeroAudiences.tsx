@@ -101,9 +101,12 @@ function AudienceCard({
     <Link
       href={a.href}
       className={`group relative flex cursor-pointer flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1 ${delayClass}`}
-      style={{ minHeight: 'clamp(480px, 55vh, 640px)' }}
+      style={{
+        minHeight: 'clamp(580px, 70vh, 780px)',
+        borderRadius: '75px',
+      }}
     >
-      <div className="relative flex-shrink-0" style={{ height: '62%' }}>
+      <div className="relative flex-shrink-0" style={{ height: '75%' }}>
         <div
           className="absolute inset-0 h-full w-full"
           style={{ background: a.colorL2 }}
@@ -136,15 +139,15 @@ function AudienceCard({
         <div
           className="absolute bottom-0 left-0 right-0"
           style={{
-            height: '55%',
+            height: '22%',
             background:
-              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 40%, #ffffff 80%, #ffffff 100%)',
+              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.4) 60%, #ffffff 100%)',
           }}
           aria-hidden="true"
         />
       </div>
 
-      <div className="relative -mt-8 flex flex-1 flex-col bg-white px-6 pb-0">
+      <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-0">
         <span
           className="mb-3 block font-sub font-light uppercase"
           style={{
@@ -186,7 +189,7 @@ function AudienceCard({
         </div>
 
         <div
-          className="-mx-6 mt-auto flex items-center justify-between px-6 py-4 transition-all duration-200 group-hover:brightness-95"
+          className="-mx-7 mt-auto flex items-center justify-between px-7 py-4 transition-all duration-200 group-hover:brightness-95"
           style={{ background: a.colorL1 }}
         >
           <span
