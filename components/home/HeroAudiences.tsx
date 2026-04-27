@@ -226,9 +226,20 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
   )
 }
 
+// Биолюминесцентная палитра — ультрафиолетово-неоновый десерт.
+// Каждый цвет — L1 из дизайн-системы, выбран для максимального glow-эффекта
+// на конкретной L2-подложке.
+const ORNAMENT_COLOR: Record<string, string> = {
+  ingredients: '#EB6EC8', // magenta на amber-m → малиновая глазурь
+  academy: '#7D78DC',     // violet на rose-m → черничная пенка
+  consulting: '#A064DC',  // purple на blue-m → ультрафиолет в космосе
+  club: '#F582A0',        // rose на sky → candy floss на бирюзе
+}
+
 function Ornament({ id }: { id: string }) {
-  const stroke = 'rgba(0,0,0,0.18)'
-  const dot = 'rgba(0,0,0,0.28)'
+  const accent = ORNAMENT_COLOR[id] ?? '#000'
+  const stroke = accent
+  const dot = accent
   const common = {
     className: 'absolute inset-0 h-full w-full',
     preserveAspectRatio: 'xMidYMid slice' as const,
