@@ -14,6 +14,7 @@ build/
 
 # secrets
 SERVER_CREDENTIALS.md
+.claude/
 
 # debug
 npm-debug.log*
