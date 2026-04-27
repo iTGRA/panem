@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Нейтральные — 80%+ пространства */
+  --c-white:      #FFFFFF;
+  --c-warm:       #F0EBE0;
+  --c-sand:       #D4CFC4;
+  --c-mist:       #9A9890;
+  --c-stone:      #4A4845;
+  --c-ink:        #1D1D1B;
+
+  /* Level 1 — насыщенные акценты */
+  --c-amber:      #FFB45A;
+  --c-yellow:     #FFD232;
+  --c-lime:       #CDDC3C;
+  --c-teal:       #6EA5AA;
+  --c-blue:       #5A8CD7;
+  --c-violet:     #7D78DC;
+  --c-purple:     #A064DC;
+  --c-magenta:    #EB6EC8;
+  --c-rose:       #F582A0;
+  --c-coral:      #FF967D;
+
+  /* Level 2 — средние тона */
+  --c-amber-m:    #FFD291;
+  --c-yellow-m:   #FFE16E;
+  --c-mint:       #AFE6C3;
+  --c-sky:        #A5D2DC;
+  --c-blue-m:     #AACBFF;
+  --c-violet-m:   #BEB4FA;
+  --c-lavender:   #CD9BF5;
+  --c-lilac:      #F5BEE6;
+  --c-rose-m:     #FAC3D2;
+  --c-peach:      #FFCBB5;
+  --c-lime-m:     #E6F596;
+
+  /* Level 3 — светлые тинты */
+  --c-amber-t:    #FCF0C8;
+  --c-yellow-t:   #FFF0CD;
+  --c-lime-t:     #F5FAC8;
+  --c-mint-t:     #D2FAE6;
+  --c-sky-t:      #D7F0F5;
+  --c-blue-t:     #E6F0FF;
+  --c-purple-t:   #F0E6FF;
+  --c-lilac-t:    #F8DBFF;
+  --c-rose-t:     #FFE1DC;
+
+  /* Семантические */
+  --c-cta-primary:  var(--c-ink);
+  --c-cta-accent:   var(--c-amber);
+  --c-link:         var(--c-blue);
+  --c-shoppable:    var(--c-amber);
+  --c-success:      var(--c-mint);
+  --c-warning:      var(--c-yellow);
+  --c-badge-new:    var(--c-lime);
+  --c-badge-hit:    var(--c-amber);
+  --c-badge-promo:  var(--c-rose);
+
+  /* Типографика */
+  --font-main: var(--font-onest), 'Onest', sans-serif;
+  --font-sub:  var(--font-exo2), 'Exo 2', sans-serif;
+
+  /* Радиусы */
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   10px;
+  --r-xl:   16px;
+  --r-full: 9999px;
+
+  /* Тени */
+  --shadow-card:     0 1px 4px rgba(0,0,0,.06), 0 0 0 0.5px rgba(0,0,0,.06);
+  --shadow-nav:      0 2px 16px rgba(0,0,0,.06);
+  --shadow-dropdown: 0 4px 20px rgba(0,0,0,.08);
+  --shadow-modal:    0 8px 40px rgba(0,0,0,.12);
+
+  /* Пространство (8px base) */
+  --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px;
+  --sp-4: 16px; --sp-6: 24px;  --sp-8: 32px;
+  --sp-12: 48px; --sp-16: 64px; --sp-24: 96px;
+
+  /* Анимации */
+  --dur-fast:   150ms;
+  --dur-base:   200ms;
+  --dur-slow:   350ms;
+  --dur-appear: 500ms;
+  --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:   cubic-bezier(0, 0, 0.2, 1);
+
+  /* Контейнеры */
+  --container-max:    1280px;
+  --container-narrow: 800px;
+  --container-px:     clamp(20px, 5vw, 80px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font-main);
+  background:  var(--c-white);
+  color:       var(--c-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Анимация появления */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.appear      { animation: fadeUp var(--dur-appear) var(--ease-out) both; }
+.appear-d1   { animation-delay: 80ms; }
+.appear-d2   { animation-delay: 160ms; }
+.appear-d3   { animation-delay: 240ms; }
+.appear-d4   { animation-delay: 320ms; }
+
+/* Shoppable ссылка */
+.shoppable-link {
+  color: var(--c-ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--c-amber);
+  padding-bottom: 1px;
+  transition: color var(--dur-base) var(--ease);
+}
+.shoppable-link:hover { color: var(--c-amber); }
+
+/* Доступность */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
