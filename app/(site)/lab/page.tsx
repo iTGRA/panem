@@ -10,6 +10,7 @@ import {
   DropdownDemo,
   TooltipDemo,
 } from '@/components/lab/MotionDemo'
+import { HeroAudiences } from '@/components/home/HeroAudiences'
 
 export const metadata: Metadata = {
   title: 'Design Lab',
@@ -642,6 +643,13 @@ export default function LabPage() {
           <Portrait letter="К" l2="#A5D2DC" role="Кофейня" name="Дима, 27" business="2 кофейни" />
           <Portrait letter="Б" l2="#FFCBB5" role="Бургерная" name="Артём, 31" business="Фастфуд-сеть" />
           <Portrait letter="С" l2="#BEB4FA" role="Столовая" name="Ирина, 44" business="Корппитание" />
+        </div>
+
+        <div className="mt-8">
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-mist">
+            Hero Audiences — новый компонент
+          </p>
+          <HeroAudiences />
         </div>
       </Section>
 
