@@ -3,7 +3,7 @@ import { HeroAudiences } from './HeroAudiences'
 
 export function HeroBlock() {
   return (
-    <section>
+    <section className="pb-12 md:pb-20">
       <div className="mx-auto max-w-container px-[var(--container-px)] pb-12 pt-16">
         <span className="mb-6 block font-sub text-[9px] font-light uppercase tracking-[0.32em] text-mist">
           Д Л Я  Т Е Х ,  К Т О  К О Р М И Т  П О В О Л Ж Ь Е

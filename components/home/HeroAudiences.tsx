@@ -104,6 +104,7 @@ function AudienceCard({
       style={{
         minHeight: 'clamp(580px, 70vh, 780px)',
         borderRadius: '75px',
+        border: '1px solid rgba(0,0,0,0.06)',
       }}
     >
       <div className="relative flex-shrink-0" style={{ height: '75%' }}>
@@ -137,13 +138,27 @@ function AudienceCard({
         </div>
 
         <div
-          className="absolute left-0 right-0 backdrop-blur-md"
+          className="pointer-events-none absolute left-0 right-0"
+          style={{
+            bottom: '64px',
+            height: '32%',
+            backdropFilter: 'blur(14px)',
+            WebkitBackdropFilter: 'blur(14px)',
+            maskImage:
+              'radial-gradient(ellipse 75% 80% at 50% 0%, transparent 0%, transparent 45%, rgba(0,0,0,0.55) 75%, #000 100%)',
+            WebkitMaskImage:
+              'radial-gradient(ellipse 75% 80% at 50% 0%, transparent 0%, transparent 45%, rgba(0,0,0,0.55) 75%, #000 100%)',
+          }}
+          aria-hidden="true"
+        />
+
+        <div
+          className="pointer-events-none absolute left-0 right-0"
           style={{
             bottom: '64px',
             height: '75px',
             background:
               'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.7) 60%, #ffffff 100%)',
-            WebkitBackdropFilter: 'blur(12px)',
           }}
           aria-hidden="true"
         />
@@ -151,9 +166,9 @@ function AudienceCard({
 
       <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-7 pt-5">
         <span
-          className="mb-5 block font-sub font-light uppercase"
+          className="mb-5 block font-sub font-bold uppercase"
           style={{
-            fontSize: '8px',
+            fontSize: '9px',
             letterSpacing: '0.28em',
             color: a.colorL1,
           }}
