@@ -77,8 +77,8 @@ const AUDIENCES: Audience[] = [
 export function HeroAudiences() {
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-      style={{ gap: '3px', background: 'var(--c-sand)' }}
+      className="grid grid-cols-1 bg-white md:grid-cols-2 lg:grid-cols-4"
+      style={{ gap: '3px' }}
     >
       {AUDIENCES.map((a, i) => (
         <AudienceCard key={a.id} audience={a} index={i} />
@@ -137,19 +137,20 @@ function AudienceCard({
         </div>
 
         <div
-          className="absolute bottom-0 left-0 right-0"
+          className="absolute left-0 right-0"
           style={{
-            height: '22%',
+            bottom: '64px',
+            height: '75px',
             background:
-              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.4) 60%, #ffffff 100%)',
+              'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.7) 60%, #ffffff 100%)',
           }}
           aria-hidden="true"
         />
       </div>
 
-      <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-0">
+      <div className="relative -mt-16 flex flex-1 flex-col bg-white px-7 pb-0 pt-5">
         <span
-          className="mb-3 block font-sub font-light uppercase"
+          className="mb-5 block font-sub font-light uppercase"
           style={{
             fontSize: '8px',
             letterSpacing: '0.28em',
@@ -160,36 +161,35 @@ function AudienceCard({
         </span>
 
         <blockquote
-          className="mb-4 flex-1 font-main leading-snug text-ink"
+          className="mb-2 flex-1 font-main leading-snug text-ink"
           style={{ fontSize: 'clamp(14px, 1.3vw, 17px)', fontWeight: 500 }}
         >
           «{a.quote}»
         </blockquote>
 
-        <div className="mb-5 flex items-center gap-2">
-          <span
-            className="h-2 w-2 flex-shrink-0 rounded-full"
-            style={{ background: a.colorL1 }}
-          />
-
-          <div>
+        <div className="mb-5 text-right">
+          <div className="flex items-center justify-end gap-2">
             <span
-              className="block font-bold text-ink"
+              className="h-2 w-2 flex-shrink-0 rounded-full"
+              style={{ background: a.colorL1 }}
+            />
+            <span
+              className="font-bold text-ink"
               style={{ fontSize: '13px', lineHeight: '1.2' }}
             >
               {a.name}
             </span>
-            <span
-              className="mt-0.5 block"
-              style={{ fontSize: '11px', color: 'rgba(0,0,0,0.40)' }}
-            >
-              {a.role}
-            </span>
           </div>
+          <span
+            className="mt-0.5 block"
+            style={{ fontSize: '11px', color: 'rgba(0,0,0,0.40)' }}
+          >
+            {a.role}
+          </span>
         </div>
 
         <div
-          className="-mx-7 mt-auto flex items-center justify-between px-7 py-4 transition-all duration-200 group-hover:brightness-95"
+          className="-mx-7 mt-auto flex items-center justify-center gap-2 px-7 py-4 transition-all duration-200 group-hover:brightness-95"
           style={{ background: a.colorL1 }}
         >
           <span
