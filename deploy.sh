@@ -6,6 +6,15 @@ echo "$(date)"
 
 cd /var/www/panem
 
+# Prisma CLI и Next.js build читают .env, но прод-конфиг лежит в .env.production.
+# Подгружаем переменные в окружение, чтобы оба этапа их увидели.
+if [ -f .env.production ]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env.production
+  set +a
+fi
+
 echo "→ Git pull..."
 git pull origin main
 

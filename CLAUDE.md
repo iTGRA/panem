@@ -310,6 +310,18 @@ export const metadata = {
 **Решение:** Корневой `app/layout.tsx` держит `<html>`, `<body>` и шрифты. `(site)/layout.tsx` — простой Fragment-wrapper с `<Header /><main>{children}</main><Footer />` и собственными metadata.title.template.
 **Правило на будущее:** В Next.js App Router `<html>/<body>` живут только в самом верхнем layout. Под-layouts route-групп — без html/body.
 
+### 2026-04-27 · DEPLOY · deploy.sh не подгружал .env.production
+**Проблема:** На сервере `.env.production` (из `.gitignore`), а Prisma CLI и `next build` читают только `.env`. На Фазе 8 деплой упал на `npx prisma migrate deploy`: `Environment variable not found: DATABASE_URL`. Затем `next build` падал с теми же `Export encountered errors` для всех страниц со SSR-обращениями к БД.
+**Где:** `deploy.sh`.
+**Решение:** В начало скрипта добавлен `set -a; source .env.production; set +a` (с `if [ -f ]`). Это экспортирует переменные в окружение шелла, и Prisma + Next.js их видят.
+**Правило на будущее:** На сервере держим прод-конфиг в `.env.production`, но любой инструмент, который запускается из shell-скрипта (Prisma, build), видит env только если её принудительно экспортировать. `deploy.sh` сам отвечает за загрузку `.env.production`.
+
+### 2026-04-27 · DEVOPS · `npm run build` уводит шаред-VDS в timeout
+**Проблема:** Во время первого деплоя (правка HeroBlock) сервер на минуту перестал пинговаться сразу после `next build`. PM2 не мог рестартнуть, пришлось ждать восстановления.
+**Где:** `/var/www/panem` на шаред-VDS (4 соседних SSR-сайта).
+**Решение:** Дождаться восстановления, рестартнуть руками. Сама сборка прошла успешно, проблема в пиковом потреблении памяти Next.js.
+**Правило на будущее:** На шаред-VDS пик `next build` может вытолкнуть процессы соседей (или себя) в OOM. Если деплой в окно, когда соседи активны — лучше избегать. Долгосрочно — рассмотреть `NODE_OPTIONS=--max-old-space-size=512` или сборку на CI с деплоем готового `.next`.
+
 ---
 
 ## БЫСТРЫЕ КОМАНДЫ
