@@ -226,6 +226,119 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
   )
 }
 
+function Ornament({ id }: { id: string }) {
+  const stroke = 'rgba(0,0,0,0.18)'
+  const dot = 'rgba(0,0,0,0.28)'
+  const common = {
+    className: 'absolute inset-0 h-full w-full',
+    preserveAspectRatio: 'xMidYMid slice' as const,
+    'aria-hidden': true,
+  }
+
+  if (id === 'ingredients') {
+    // Регулярная сетка точек — ассортимент, склад, единицы товара
+    const dots: { x: number; y: number }[] = []
+    for (let row = 0; row < 6; row++) {
+      for (let col = 0; col < 7; col++) {
+        dots.push({ x: 10 + col * 14, y: 12 + row * 16 })
+      }
+    }
+    return (
+      <svg viewBox="0 0 100 100" {...common}>
+        {dots.map((d, i) => (
+          <circle key={i} cx={d.x} cy={d.y} r={1.4} fill={dot} />
+        ))}
+      </svg>
+    )
+  }
+
+  if (id === 'academy') {
+    // Концентрические круги — расширяющееся знание
+    return (
+      <svg viewBox="0 0 100 100" {...common}>
+        {[16, 28, 40, 52, 64, 76].map((r, i) => (
+          <circle
+            key={i}
+            cx={50}
+            cy={50}
+            r={r}
+            stroke={stroke}
+            strokeWidth="0.6"
+            fill="none"
+          />
+        ))}
+      </svg>
+    )
+  }
+
+  if (id === 'consulting') {
+    // Параллельные диагональные штрихи — траектория, рост
+    const lines = []
+    for (let i = -3; i < 14; i++) {
+      lines.push(
+        <line
+          key={i}
+          x1={i * 11}
+          y1={0}
+          x2={i * 11 + 36}
+          y2={100}
+          stroke={stroke}
+          strokeWidth="0.7"
+        />
+      )
+    }
+    return (
+      <svg viewBox="0 0 100 100" {...common}>
+        {lines}
+      </svg>
+    )
+  }
+
+  if (id === 'club') {
+    // Сеть узлов — сообщество, связи
+    const nodes = [
+      { x: 18, y: 22 },
+      { x: 52, y: 14 },
+      { x: 82, y: 28 },
+      { x: 32, y: 48 },
+      { x: 68, y: 52 },
+      { x: 22, y: 76 },
+      { x: 60, y: 80 },
+    ]
+    const edges: [number, number][] = [
+      [0, 1],
+      [1, 2],
+      [0, 3],
+      [1, 3],
+      [2, 4],
+      [3, 4],
+      [3, 5],
+      [4, 6],
+      [5, 6],
+    ]
+    return (
+      <svg viewBox="0 0 100 100" {...common}>
+        {edges.map(([a, b], i) => (
+          <line
+            key={i}
+            x1={nodes[a].x}
+            y1={nodes[a].y}
+            x2={nodes[b].x}
+            y2={nodes[b].y}
+            stroke={stroke}
+            strokeWidth="0.6"
+          />
+        ))}
+        {nodes.map((n, i) => (
+          <circle key={i} cx={n.x} cy={n.y} r={1.8} fill={dot} />
+        ))}
+      </svg>
+    )
+  }
+
+  return null
+}
+
 function ColorCard({ audience: a, index }: { audience: Audience; index: number }) {
   return (
     <Link
@@ -234,84 +347,92 @@ function ColorCard({ audience: a, index }: { audience: Audience; index: number }
       style={{ ...CARD_SHELL, background: a.colorL2 }}
     >
       <div className="flex flex-1 flex-col px-7 pb-7 pt-9">
-        <h3
-          className="font-main font-black text-ink"
-          style={{
-            fontSize: 'clamp(28px, 2.8vw, 44px)',
-            lineHeight: '1.0',
-            letterSpacing: '-0.015em',
-            wordBreak: 'break-word',
-          }}
-        >
-          {a.heading}
-        </h3>
-
-        <blockquote className="mt-6">
-          <span
-            className="block font-main font-black leading-none"
-            style={{
-              fontSize: '72px',
-              color: 'rgba(0,0,0,0.18)',
-              letterSpacing: '-0.05em',
-              marginBottom: '-14px',
-            }}
-            aria-hidden="true"
-          >
-            «
-          </span>
-          <span
-            className="block font-main leading-snug text-ink"
-            style={{ fontSize: 'clamp(13px, 1.1vw, 15px)', fontWeight: 500 }}
-          >
-            {a.quote}
-          </span>
-        </blockquote>
-
-        <div className="mt-5 flex items-center gap-3">
-          <div
-            className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-white"
-            style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.6)' }}
-          >
-            {a.imageUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={a.imageUrl}
-                alt={a.name}
-                className="h-full w-full object-cover"
-              />
-            )}
-          </div>
-          <div>
-            <span
-              className="block font-bold text-ink"
-              style={{ fontSize: '13px', lineHeight: '1.2' }}
-            >
-              {a.name}
-            </span>
-            <span
-              className="mt-0.5 block"
-              style={{ fontSize: '11px', color: 'rgba(0,0,0,0.55)' }}
-            >
-              {a.role}
-            </span>
-          </div>
+        {/* Top zone: primitive ornament unique per direction */}
+        <div className="relative -mx-7 -mt-9 flex-1 overflow-hidden">
+          <Ornament id={a.id} />
         </div>
 
-        <div className="mt-auto flex justify-center pt-8">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 transition-transform duration-200 group-hover:scale-105">
+        {/* Bottom zone: heading + quote + persona + CTA stacked compactly */}
+        <div className="pt-6">
+          <h3
+            className="font-main font-black text-ink"
+            style={{
+              fontSize: 'clamp(28px, 2.8vw, 44px)',
+              lineHeight: '1.0',
+              letterSpacing: '-0.015em',
+              wordBreak: 'break-word',
+            }}
+          >
+            {a.heading}
+          </h3>
+
+          <blockquote className="mt-5">
             <span
-              className="font-main font-bold uppercase text-ink"
-              style={{ fontSize: '10px', letterSpacing: '0.10em' }}
+              className="block font-main font-bold leading-none"
+              style={{
+                fontSize: '64px',
+                color: '#000',
+                letterSpacing: '-0.05em',
+                marginBottom: '-12px',
+              }}
+              aria-hidden="true"
             >
-              {a.ctaLabelLong}
+              «
             </span>
             <span
-              className="font-bold text-ink transition-transform duration-200 group-hover:translate-x-0.5"
-              style={{ fontSize: '13px' }}
+              className="block font-main leading-snug text-ink"
+              style={{ fontSize: 'clamp(13px, 1.1vw, 15px)', fontWeight: 500 }}
             >
-              →
+              {a.quote}
             </span>
-          </span>
+          </blockquote>
+
+          <div className="mt-5 flex items-center gap-3">
+            <div
+              className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-white"
+              style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.6)' }}
+            >
+              {a.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={a.imageUrl}
+                  alt={a.name}
+                  className="h-full w-full object-cover"
+                />
+              )}
+            </div>
+            <div>
+              <span
+                className="block font-bold text-ink"
+                style={{ fontSize: '13px', lineHeight: '1.2' }}
+              >
+                {a.name}
+              </span>
+              <span
+                className="mt-0.5 block"
+                style={{ fontSize: '11px', color: 'rgba(0,0,0,0.55)' }}
+              >
+                {a.role}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 transition-transform duration-200 group-hover:scale-105">
+              <span
+                className="font-main font-bold uppercase text-ink"
+                style={{ fontSize: '10px', letterSpacing: '0.10em' }}
+              >
+                {a.ctaLabelLong}
+              </span>
+              <span
+                className="font-bold text-ink transition-transform duration-200 group-hover:translate-x-0.5"
+                style={{ fontSize: '13px' }}
+              >
+                →
+              </span>
+            </span>
+          </div>
         </div>
       </div>
     </Link>
