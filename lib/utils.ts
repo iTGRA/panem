@@ -9,10 +9,19 @@ export function getCategoryColor(colorVar: string): string {
   return `var(${colorVar})`
 }
 
-export function formatDateRu(date: Date): string {
+export function formatDateRu(date: Date | null | undefined): string {
+  if (!date) return ''
   return new Intl.DateTimeFormat('ru-RU', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(date)
+  }).format(new Date(date))
+}
+
+export function formatDateShort(date: Date | null | undefined): string {
+  if (!date) return ''
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+  }).format(new Date(date))
 }
