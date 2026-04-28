@@ -25,31 +25,31 @@ const ITEMS = [
 
 export function SupportBlock() {
   return (
-    <section className="bg-white px-[var(--container-px)] py-16">
+    <section className="bg-white px-[var(--container-px)] py-20 md:py-24">
       <div className="mx-auto max-w-container">
         <div
           className="border-l-[3px] pl-8"
           style={{ borderColor: 'var(--c-amber)' }}
         >
-          <span className="mb-2 block font-sub text-[9px] font-light uppercase tracking-[0.32em] text-mist">
-            Т Е Х П О Д Д Е Р Ж К А · 2 4 / 7
+          <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
+            Техподдержка · 24/7
           </span>
           <h2
             className="font-black uppercase tracking-[0.02em] text-ink"
-            style={{ fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1 }}
+            style={{ fontSize: 'var(--type-h2)', lineHeight: 1.0 }}
           >
-            НАШИ ТЕХНОЛОГИ
+            Наши технологи
             <br />
-            РАБОТАЮТ НА РОСТ
+            работают на рост
             <br />
-            ВАШЕЙ КОМПАНИИ
+            вашей компании
           </h2>
-          <p className="mt-4 text-sm text-mist">
+          <p className="mt-5 text-base leading-relaxed text-stone">
             Бесплатно. На всех этапах. 24/7.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {ITEMS.map((item) => (
             <div key={item.title} className="flex gap-4">
               <span
@@ -58,8 +58,8 @@ export function SupportBlock() {
                 style={{ background: 'var(--c-amber)' }}
               />
               <div>
-                <p className="text-[14px] font-bold text-ink">{item.title}</p>
-                <p className="mt-1 text-[12px] leading-[1.55] text-stone">
+                <p className="text-[15px] font-bold text-ink">{item.title}</p>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-stone">
                   {item.body}
                 </p>
               </div>
@@ -67,7 +67,7 @@ export function SupportBlock() {
           ))}
         </div>
 
-        <div className="mt-12">
+        <div className="mt-14">
           <Button href="/support" variant="primary">
             Задать вопрос технологу
           </Button>

@@ -45,7 +45,7 @@ export function HeroBlock() {
               fontSize: '10px',
               letterSpacing: '0.22em',
               borderRadius: 'var(--r-xs)',
-              border: '0.5px solid var(--c-sand)',
+              border: '1px solid var(--c-stone)',
             }}
           >
             Стать партнёром

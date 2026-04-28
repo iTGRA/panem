@@ -7,7 +7,7 @@ const config: Config = {
       colors: {
         ink: '#1D1D1B',
         stone: '#4A4845',
-        mist: '#9A9890',
+        mist: '#767572', // углублён до WCAG AA на белом (4.51:1)
         sand: '#D4CFC4',
         warm: '#F0EBE0',
 
@@ -74,6 +74,7 @@ const config: Config = {
       },
       maxWidth: {
         container: '1280px',
+        wide: '1440px',
         narrow: '800px',
       },
     },

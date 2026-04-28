@@ -4,19 +4,19 @@ export function FinalCtaBlock() {
   return (
     <section
       id="contact"
-      className="bg-ink px-[var(--container-px)] py-20 md:py-24"
+      className="bg-ink px-[var(--container-px)] py-24 md:py-32"
     >
       <div className="mx-auto max-w-container text-center">
         <h2
           className="font-black uppercase tracking-[0.02em] text-white"
-          style={{ fontSize: 'clamp(32px, 5vw, 72px)', lineHeight: 0.95 }}
+          style={{ fontSize: 'var(--type-h2-display)', lineHeight: 0.95 }}
         >
           ГОТОВЫ
           <br />
           НАЧАТЬ?
         </h2>
 
-        <p className="mx-auto mt-6 max-w-[460px] text-sm leading-[1.6] text-mist">
+        <p className="mx-auto mt-7 max-w-[480px] text-base leading-relaxed text-sand">
           Получите прайс или оставьте заявку — свяжемся в течение часа.
         </p>
 

@@ -5,15 +5,15 @@ export async function RegionsBlock() {
   const offices = await getOffices()
 
   return (
-    <section className="bg-warm px-[var(--container-px)] py-16">
+    <section className="bg-warm px-[var(--container-px)] py-20 md:py-24">
       <div className="mx-auto max-w-container">
-        <div className="mb-10">
-          <span className="mb-2 block font-sub text-[9px] font-light uppercase tracking-[0.32em] text-mist">
-            Р Е Г И О Н Ы
+        <div className="mb-12">
+          <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
+            Регионы
           </span>
           <h2
             className="font-black uppercase tracking-[0.02em] text-ink"
-            style={{ fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1 }}
+            style={{ fontSize: 'var(--type-h2)', lineHeight: 1.0 }}
           >
             МЫ РЯДОМ
           </h2>
@@ -23,32 +23,32 @@ export async function RegionsBlock() {
           {offices.map((office) => (
             <article
               key={office.slug}
-              className="rounded-card border border-sand bg-white p-6"
+              className="rounded-card border border-sand bg-white p-7"
             >
-              <div className="mb-4 flex items-center gap-2">
+              <div className="mb-5 flex items-center gap-2">
                 <span
                   className={cn(
                     'h-2 w-2 flex-shrink-0 rounded-full',
                     office.isHq ? 'bg-amber' : 'bg-sand',
                   )}
                 />
-                <span className="text-[14px] font-bold text-ink">
+                <span className="text-[15px] font-bold text-ink">
                   {office.city}
                 </span>
                 {office.isHq && (
-                  <span className="ml-2 text-[9px] font-medium uppercase tracking-[0.18em] text-mist">
+                  <span className="ml-2 text-[10px] font-medium uppercase tracking-[0.18em] text-stone">
                     Головной офис
                   </span>
                 )}
               </div>
 
-              <p className="text-[12px] leading-[1.5] text-stone">
+              <p className="text-[14px] leading-relaxed text-stone">
                 {office.address}
               </p>
-              <p className="mt-1 text-[12px] text-mist">{office.schedule}</p>
+              <p className="mt-1.5 text-[13px] text-stone">{office.schedule}</p>
               <a
                 href={`tel:${office.phone.replace(/\D/g, '')}`}
-                className="mt-3 block text-[14px] font-bold tabular-nums text-ink transition-colors duration-150 hover:text-amber"
+                className="mt-4 block text-[16px] font-bold tabular-nums text-ink transition-colors duration-150 hover:text-amber"
               >
                 {office.phone}
               </a>

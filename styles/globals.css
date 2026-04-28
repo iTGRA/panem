@@ -7,7 +7,9 @@
   --c-white:      #FFFFFF;
   --c-warm:       #F0EBE0;
   --c-sand:       #D4CFC4;
-  --c-mist:       #9A9890;
+  /* mist использовался для secondary-текста и провалил WCAG AA на белом
+     (2.89:1 при #9A9890). Углубили до #767572 — контраст 4.51:1, проходит AA. */
+  --c-mist:       #767572;
   --c-stone:      #4A4845;
   --c-ink:        #1D1D1B;
 
@@ -58,9 +60,23 @@
   --c-badge-hit:    var(--c-amber);
   --c-badge-promo:  var(--c-rose);
 
-  /* Типографика */
+  /* Типографика — семейства */
   --font-main: var(--font-onest), 'Onest', sans-serif;
   --font-sub:  var(--font-exo2), 'Exo 2', sans-serif;
+
+  /* Типошкала — clamp-переменные, чтобы все секции тянулись согласованно.
+     Base 16px (DS body). Каждый шаг ~1.4× (близко к Augmented Fourth). */
+  --type-eyebrow:        clamp(10px, 0.7vw, 12px);  /* спейсед метки */
+  --type-eyebrow-tracking: 0.22em;
+  --type-caption:        clamp(11px, 0.85vw, 13px); /* подписи stats, role */
+  --type-body-sm:        clamp(13px, 1vw, 15px);    /* текст карточек */
+  --type-body:           clamp(15px, 1.1vw, 17px);  /* основной текст */
+  --type-body-lh:        1.65;
+  --type-h3:             clamp(18px, 1.6vw, 24px);
+  --type-h2:             clamp(28px, 3.2vw, 48px);  /* стандартный H2 секции */
+  --type-h2-display:     clamp(36px, 5vw, 72px);    /* hero CTA, акцентный */
+  --type-h1:             clamp(40px, 6.5vw, 96px);  /* hero display */
+  --type-stat:           clamp(48px, 6vw, 96px);    /* большие цифры */
 
   /* Радиусы */
   --r-xs:   2px;
@@ -90,7 +106,8 @@
   --ease-out:   cubic-bezier(0, 0, 0.2, 1);
 
   /* Контейнеры */
-  --container-max:    1280px;
+  --container-max:    1280px;  /* стандартные секции */
+  --container-wide:   1440px;  /* hero photo strip, full-bleed коллажи */
   --container-narrow: 800px;
   --container-px:     clamp(20px, 5vw, 80px);
 }

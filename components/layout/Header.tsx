@@ -8,7 +8,7 @@ import { MobileMenu } from './MobileMenu'
 const NAV_ITEMS = [
   { label: 'Академия', href: '/academy' as const },
   { label: 'Консалтинг', href: '/consulting' as const },
-  { label: 'Клуб', href: '/club' as const },
+  { label: 'Бизнес-клуб', href: '/club' as const },
   { label: 'О нас', href: '/about' as const },
 ]
 
