@@ -28,7 +28,7 @@ const AUDIENCES: Audience[] = [
     name: 'Анна',
     role: 'Владелица кондитерской',
     quote:
-      'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии.',
+      'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии. Стало заметно больше времени на развитие проекта, а не это вот всё.',
     initial: 'А',
     ctaLabel: 'Перейти в каталог',
     usps: [
@@ -171,9 +171,9 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
 
         {/* Speech-bubble с цитатой героя — оверлей поверх фото.
             Сдвинут от верх-левого угла так, чтобы не задеть скругление 75px карточки. */}
-        <div className="pointer-events-none absolute left-7 top-7 z-10 max-w-[86%]">
+        <div className="pointer-events-none absolute left-7 top-7 z-10 max-w-[72%]">
           <div
-            className="relative rounded-2xl bg-white px-4 py-2.5"
+            className="relative rounded-2xl bg-white px-4 py-3"
             style={{
               boxShadow:
                 '0 10px 24px -8px rgba(0,0,0,0.22), 0 2px 6px -2px rgba(0,0,0,0.12)',
@@ -181,7 +181,7 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
           >
             <p
               className="leading-snug text-ink"
-              style={{ fontSize: '12px', fontWeight: 500 }}
+              style={{ fontSize: '14px', fontWeight: 500, lineHeight: 1.4 }}
             >
               «{a.quote}»
             </p>
