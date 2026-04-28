@@ -11,16 +11,14 @@ export async function AcademyFeedBlock() {
       <div className="mx-auto max-w-container">
         <div className="mb-12 grid grid-cols-1 items-end gap-6 md:grid-cols-[1fr_auto] md:gap-12">
           <div>
-            <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-mist">
-              Академия
+            <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
+              Знания. Подаются горячими.
             </span>
             <h2
               className="font-black uppercase tracking-[0.02em] text-ink"
-              style={{ fontSize: 'var(--type-h2)', lineHeight: 1.0 }}
+              style={{ fontSize: 'var(--type-h2)', lineHeight: 1 }}
             >
-              Знания.
-              <br />
-              Подаются горячими.
+              Академия ПАНЕМ
             </h2>
             <p className="mt-5 max-w-[520px] text-base leading-relaxed text-stone">
               Площадка, где эксперты производителей делятся трендами, техниками
