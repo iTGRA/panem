@@ -95,7 +95,11 @@ export function HeroAudiences({ variant = 'photo' }: { variant?: Variant } = {})
   return (
     <div
       className="grid grid-cols-1 bg-white md:grid-cols-2 lg:grid-cols-4"
-      style={{ gap: '3px' }}
+      style={{
+        gap: '14px',
+        paddingLeft: 'clamp(20px, 3vw, 48px)',
+        paddingRight: 'clamp(20px, 3vw, 48px)',
+      }}
     >
       {AUDIENCES.map((a, i) => (
         <AudienceCard key={a.id} audience={a} index={i} variant={variant} />
@@ -163,6 +167,31 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
               className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
             />
           )}
+        </div>
+
+        {/* Speech-bubble с цитатой героя — оверлей поверх фото.
+            Сдвинут от верх-левого угла так, чтобы не задеть скругление 75px карточки. */}
+        <div className="pointer-events-none absolute left-7 top-7 z-10 max-w-[86%]">
+          <div
+            className="relative rounded-2xl bg-white px-4 py-2.5"
+            style={{
+              boxShadow:
+                '0 10px 24px -8px rgba(0,0,0,0.22), 0 2px 6px -2px rgba(0,0,0,0.12)',
+            }}
+          >
+            <p
+              className="leading-snug text-ink"
+              style={{ fontSize: '12px', fontWeight: 500 }}
+            >
+              «{a.quote}»
+            </p>
+            {/* «Хвостик» спич-бабла — клипом, чтобы не двойная тень */}
+            <span
+              aria-hidden
+              className="absolute -bottom-[7px] left-6 block h-3 w-4 bg-white"
+              style={{ clipPath: 'polygon(0 0, 100% 0, 35% 100%)' }}
+            />
+          </div>
         </div>
       </div>
 
