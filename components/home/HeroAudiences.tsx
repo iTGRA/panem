@@ -13,7 +13,6 @@ interface Audience {
   quote: string
   initial: string
   ctaLabel: string
-  ctaLabelLong: string
   usps: string[]
   imageUrl?: string
 }
@@ -21,7 +20,7 @@ interface Audience {
 const AUDIENCES: Audience[] = [
   {
     id: 'ingredients',
-    direction: 'И Н Г Р Е Д И Е Н Т Ы',
+    direction: 'Ингредиенты',
     heading: 'Каталог',
     href: '/catalog',
     colorL2: '#FFD291',
@@ -31,14 +30,13 @@ const AUDIENCES: Audience[] = [
     quote:
       'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии.',
     initial: 'А',
-    ctaLabel: 'Перейти',
-    ctaLabelLong: 'Перейти в каталог',
+    ctaLabel: 'Перейти в каталог',
     usps: ['Более 2500 SKU', '50 производителей', 'Правильное хранение', 'Доставка'],
     imageUrl: '/images/audiences/cafe_owner.jpg',
   },
   {
     id: 'academy',
-    direction: 'А К А Д Е М И Я',
+    direction: 'Академия',
     heading: 'Академия',
     href: '/academy',
     colorL2: '#FAC3D2',
@@ -48,14 +46,13 @@ const AUDIENCES: Audience[] = [
     quote:
       'После мастер-класса я переделала всю линейку тортов. Гости заметили сразу.',
     initial: 'Р',
-    ctaLabel: 'Смотреть',
-    ctaLabelLong: 'Получить знания',
+    ctaLabel: 'Смотреть курсы',
     usps: ['Демо-зона', 'Мастер-классы', 'Обучение', 'База знаний'],
     imageUrl: '/images/audiences/chef_conditer.jpg',
   },
   {
     id: 'consulting',
-    direction: 'К О Н С А Л Т И Н Г',
+    direction: 'Консалтинг',
     heading: 'Консалтинг',
     href: '/consulting',
     colorL2: '#AACBFF',
@@ -65,14 +62,13 @@ const AUDIENCES: Audience[] = [
     quote:
       'Снизили фудкост с 38% до 28%. Меню и техкарты пересобрали за три месяца.',
     initial: 'Д',
-    ctaLabel: 'Обсудить',
-    ctaLabelLong: 'Получить консультацию',
+    ctaLabel: 'Заказать проект',
     usps: ['Запуск проекта', 'Перезапуск', 'Оптимизация', 'Масштабирование'],
     imageUrl: '/images/audiences/manager1.jpg',
   },
   {
     id: 'club',
-    direction: 'Б И З Н Е С - К Л У Б',
+    direction: 'Бизнес-клуб',
     heading: 'Бизнес-клуб',
     href: '/club',
     colorL2: '#A5D2DC',
@@ -82,8 +78,7 @@ const AUDIENCES: Audience[] = [
     quote:
       'Здесь не продают — здесь делятся. Реальные решения от тех, кто уже прошёл этот путь.',
     initial: 'В',
-    ctaLabel: 'Вступить',
-    ctaLabelLong: 'Вступить',
+    ctaLabel: 'Вступить в клуб',
     usps: ['Мероприятия', 'Нетворкинг', 'Более 300 профессионалов'],
     imageUrl: '/images/audiences/boss1.jpg',
   },
@@ -165,17 +160,18 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
       </div>
 
       <div
-        className="flex flex-col bg-white px-6 pb-6 pt-5"
-        style={{ minHeight: '260px' }}
+        className="flex flex-col bg-white px-6 pb-6 pt-6"
+        style={{ minHeight: '280px' }}
       >
         <span
-          className="mb-5 block font-sub font-bold uppercase"
-          style={{
-            fontSize: '9px',
-            letterSpacing: '0.28em',
-            color: a.colorL1,
-          }}
+          className="mb-5 flex items-center gap-2.5 font-sub font-bold uppercase text-stone"
+          style={{ fontSize: '13px', letterSpacing: '0.16em' }}
         >
+          <span
+            className="h-2 w-2 flex-shrink-0 rounded-full"
+            style={{ background: a.colorL1 }}
+            aria-hidden="true"
+          />
           {a.direction}
         </span>
 
@@ -209,18 +205,18 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
 
         <div className="mt-auto flex justify-center">
           <span
-            className="inline-flex items-center gap-1.5 rounded-full px-5 py-3 transition-all duration-200 group-hover:brightness-95"
+            className="inline-flex items-center gap-2 rounded-full px-5 py-3 transition-all duration-200 group-hover:brightness-95"
             style={{ background: a.colorL1 }}
           >
             <span
               className="font-main font-bold uppercase text-white"
-              style={{ fontSize: '10px', letterSpacing: '0.14em' }}
+              style={{ fontSize: '10px', letterSpacing: '0.12em' }}
             >
               {a.ctaLabel}
             </span>
             <span
               className="font-bold text-white transition-transform duration-200 group-hover:translate-x-0.5"
-              style={{ fontSize: '13px' }}
+              style={{ fontSize: '14px' }}
             >
               →
             </span>
@@ -440,7 +436,7 @@ function ColorCard({ audience: a, index }: { audience: Audience; index: number }
                 className="font-main font-bold uppercase text-ink"
                 style={{ fontSize: '10px', letterSpacing: '0.10em' }}
               >
-                {a.ctaLabelLong}
+                {a.ctaLabel}
               </span>
               <span
                 className="font-bold text-ink transition-transform duration-200 group-hover:translate-x-0.5"
