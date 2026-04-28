@@ -4,8 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import type { Route } from 'next'
 import { pluralizeRu } from '@/lib/utils'
-
-type Brand = { slug: string; name: string; bio: string }
+import type { Brand } from '@/lib/data/catalog'
 
 const INITIAL_VISIBLE = 3 // первый ряд на десктопе (lg:grid-cols-3)
 
