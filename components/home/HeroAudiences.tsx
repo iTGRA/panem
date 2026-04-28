@@ -169,6 +169,39 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
           )}
         </div>
 
+        {/* Тёмный градиент по нижнему краю фото — обеспечивает контраст
+            белой подписи персоны независимо от яркости снимка. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%]"
+          style={{
+            background:
+              'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 45%, transparent 100%)',
+          }}
+        />
+
+        {/* Подпись героя — белая, прижата к низу фото. */}
+        <div className="pointer-events-none absolute bottom-6 left-7 right-7 z-10">
+          <p
+            className="font-bold leading-tight text-white"
+            style={{
+              fontSize: '15px',
+              textShadow: '0 2px 8px rgba(0,0,0,0.4)',
+            }}
+          >
+            {a.name}
+          </p>
+          <p
+            className="mt-0.5 leading-snug text-white/90"
+            style={{
+              fontSize: '12px',
+              textShadow: '0 2px 8px rgba(0,0,0,0.4)',
+            }}
+          >
+            {a.role}
+          </p>
+        </div>
+
         {/* Speech-bubble с цитатой героя — оверлей поверх фото.
             Сдвинут от верх-левого угла так, чтобы не задеть скругление 75px карточки. */}
         <div className="pointer-events-none absolute left-7 top-7 z-10 max-w-[72%]">
@@ -224,12 +257,6 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
             </li>
           ))}
         </ul>
-
-        {/* Персона — компактная подпись (лицо уже есть на фото выше) */}
-        <p className="mb-5 text-[12px] leading-snug text-stone">
-          <span className="font-bold text-ink">{a.name}</span>
-          <span className="text-stone"> · {a.role}</span>
-        </p>
 
         <div className="mt-auto flex justify-center">
           <span
