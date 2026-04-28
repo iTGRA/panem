@@ -1,15 +1,8 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 import { Button } from '@/components/ui/Button'
-
-function pluralize(n: number, forms: [string, string, string]) {
-  const a = Math.abs(n) % 100
-  const b = a % 10
-  if (a > 10 && a < 20) return forms[2]
-  if (b > 1 && b < 5) return forms[1]
-  if (b === 1) return forms[0]
-  return forms[2]
-}
+import { BrandsGrid } from './BrandsGrid'
+import { pluralizeRu } from '@/lib/utils'
 
 type Category = {
   slug: string
@@ -278,7 +271,7 @@ export function CatalogEntryBlock() {
                   </Link>
                   <span className="flex-shrink-0 text-[12px] font-medium tabular-nums text-stone">
                     {cat.count}{' '}
-                    {pluralize(cat.count, ['товар', 'товара', 'товаров'])}
+                    {pluralizeRu(cat.count, ['товар', 'товара', 'товаров'])}
                   </span>
                 </div>
 
@@ -326,27 +319,7 @@ export function CatalogEntryBlock() {
         {/* Производители */}
         <div className="mb-16">
           <SubHeading label="02" title="По производителям" />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {BRANDS.map((b) => (
-              <Link
-                key={b.slug}
-                href={`/catalog/brands/${b.slug}` as Route}
-                className="group block rounded-card border border-sand bg-white p-6 transition-[box-shadow,border-color] duration-300 ease-out hover:border-amber/40 hover:shadow-[0_14px_28px_-10px_rgba(0,0,0,0.16)]"
-              >
-                <h4
-                  className="mb-3 font-black uppercase text-ink transition-colors duration-300 group-hover:text-amber"
-                  style={{
-                    fontSize: 'clamp(18px, 1.4vw, 22px)',
-                    lineHeight: 1.1,
-                    letterSpacing: '-0.005em',
-                  }}
-                >
-                  {b.name}
-                </h4>
-                <p className="text-[13px] leading-relaxed text-stone">{b.bio}</p>
-              </Link>
-            ))}
-          </div>
+          <BrandsGrid brands={BRANDS} />
         </div>
 
         <div className="text-center">
