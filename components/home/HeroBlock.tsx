@@ -5,26 +5,30 @@ export function HeroBlock() {
   return (
     <section className="pb-12 md:pb-20">
       <div className="mx-auto max-w-container px-[var(--container-px)] pb-12 pt-16">
-        <span className="mb-6 block font-sub text-[9px] font-light uppercase tracking-[0.32em] text-mist">
-          Д Л Я  Т Е Х ,  К Т О  К О Р М И Т  П О В О Л Ж Ь Е
-        </span>
-
         <h1
-          className="appear mb-8 font-main font-black uppercase text-ink"
+          className="appear mb-7 font-main font-black uppercase text-ink"
           style={{
-            fontSize: 'clamp(40px, 6.5vw, 96px)',
-            lineHeight: '0.93',
+            fontSize: 'clamp(36px, 5.6vw, 84px)',
+            lineHeight: '0.95',
             letterSpacing: '-0.01em',
           }}
         >
           ИНГРЕДИЕНТЫ
           <br />
-          ДЛЯ ПЕКАРЕН,
+          ДЛЯ КОНДИТЕРОВ,
           <br />
-          РЕСТОРАНОВ
+          РЕСТОРАНОВ, ПЕКАРЕН,
           <br />
-          И ПРОИЗВОДСТВ.
+          КАФЕ И ПРОИЗВОДСТВ.
         </h1>
+
+        <p
+          className="appear appear-d1 mb-10 max-w-[640px] leading-relaxed text-stone"
+          style={{ fontSize: 'clamp(16px, 1.3vw, 20px)' }}
+        >
+          Получайте профессиональный сервис, экономьте время, развивайте свои
+          проекты.
+        </p>
 
         <div className="appear appear-d1 flex flex-wrap gap-3">
           <Link

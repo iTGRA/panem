@@ -1,9 +1,6 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 import { Button } from '@/components/ui/Button'
-import { getCategoriesWithCounts } from '@/lib/db/categories'
-import { getSegments } from '@/lib/db/segments'
-import { getBrands } from '@/lib/db/brands'
 
 function pluralize(n: number, forms: [string, string, string]) {
   const a = Math.abs(n) % 100
@@ -14,9 +11,210 @@ function pluralize(n: number, forms: [string, string, string]) {
   return forms[2]
 }
 
+type Category = {
+  slug: string
+  name: string
+  count: number
+  color: string
+  subs: string[]
+}
+
+const CATEGORIES: Category[] = [
+  {
+    slug: 'food-ingredients',
+    name: 'Пищевые ингредиенты',
+    count: 769,
+    color: 'var(--c-rose)',
+    subs: [
+      'Аром-продукты',
+      'Готовая еда',
+      'Кондитерские крема и сливки',
+      'Дрожжи',
+      'Консервация и соусы',
+      'Молочные продукты',
+      'Кондитерские смеси',
+      'Мороженое',
+      'Мука',
+      'Орехи, семечки, сухофрукты, пасты',
+      'Масла для жарки и фритюра',
+      'Пищевые добавки',
+      'Начинки пастообразные и кремовые',
+      'Фруктовые и ягодные начинки, пюре',
+      'Сыры',
+      'Хлебопекарные смеси',
+    ],
+  },
+  {
+    slug: 'chocolate',
+    name: 'Шоколад и какао-продукты',
+    count: 125,
+    color: 'var(--c-amber)',
+    subs: [
+      'Глазурь шоколадная',
+      'Горячий шоколад',
+      'Какао-масло',
+      'Какао-порошок',
+      'Термостабильные капли',
+      'Формы и инвентарь для шоколада',
+      'Шоколад',
+      'Шоколадный декор',
+    ],
+  },
+  {
+    slug: 'inventory',
+    name: 'Инвентарь',
+    count: 95,
+    color: 'var(--c-violet)',
+    subs: [
+      'Для выпечки',
+      'Для работы с мастикой',
+      'Мелкий инвентарь',
+      'Металлические и пластиковые формы',
+      'Насадки и кондитерские мешки',
+      'Поликарбонатные формы',
+      'Силиконовые формы и коврики',
+      'Трафареты',
+    ],
+  },
+  {
+    slug: 'decoration',
+    name: 'Декорирование',
+    count: 94,
+    color: 'var(--c-coral)',
+    subs: [
+      'Мастика, марципан',
+      'Несъедобный декор',
+      'Пищевые красители',
+      'Покрытия',
+      'Посыпки',
+      'Фигурки съедобные',
+    ],
+  },
+  {
+    slug: 'packaging',
+    name: 'Упаковка',
+    count: 74,
+    color: 'var(--c-teal)',
+    subs: [
+      'Коробки',
+      'Ленты атласные и декоративные',
+      'Пакеты',
+      'Посуда для десертов',
+      'Расходники',
+    ],
+  },
+  {
+    slug: 'drinks',
+    name: 'Для напитков',
+    count: 19,
+    color: 'var(--c-blue)',
+    subs: ['Базы для напитков', 'Горячий шоколад (напитки)', 'Молоко альтернативное'],
+  },
+]
+
+type Brand = { slug: string; name: string; bio: string }
+
+const BRANDS: Brand[] = [
+  {
+    slug: 'backaldrin',
+    name: 'Backaldrin',
+    bio: 'Компания Backaldrin, основанная в 1964 году, предлагает высококачественные ингредиенты и разрабатывает инновационные идеи для хлебопекарной и кондитерской отрасли по всему миру.',
+  },
+  {
+    slug: 'csm-ingredients',
+    name: 'CSM Ingredients',
+    bio: 'Ведущий производитель ингредиентов высочайшего качества более чем в 120 странах: маргарины и жиры, кондитерские ингредиенты, продукты для хлебобулочной, молочной, немолочной промышленности и производства мороженого.',
+  },
+  {
+    slug: 'lesaffre',
+    name: 'Lesaffre / Саф-Нева',
+    bio: 'Lesaffre — ключевой мировой игрок в области ферментации.',
+  },
+  {
+    slug: 'barry-callebaut',
+    name: 'Barry Callebaut',
+    bio: 'Мировой лидер по производству высококачественного шоколада, глазурей и какао. Партнёр, который вдохновляет и поддерживает новыми идеями и продуктовыми решениями.',
+  },
+  {
+    slug: 'supermuka',
+    name: 'СуперМука',
+    bio: 'Бренд «СуперМука» занимает лидирующую позицию на российском рынке по производству специализированных видов муки и мучных смесей.',
+  },
+  {
+    slug: 'art-ko',
+    name: 'Арт-Ко',
+    bio: 'Российский производитель ингредиентов для хлебопечения.',
+  },
+  {
+    slug: 'bakelab',
+    name: 'BakeLab',
+    bio: 'Российская компания BakeLab — производитель кондитерских смесей, агентов и кремов.',
+  },
+  {
+    slug: 'invi',
+    name: 'ИНВИ',
+    bio: 'Компания «ИНВИ» предлагает профессиональный инвентарь для пекарей и кондитеров.',
+  },
+  {
+    slug: 'lactalis',
+    name: 'Lactalis',
+    bio: 'Группа компаний Lactalis уже почти 100 лет создаёт лучшие молочные продукты по всему миру и поддерживает тех, кто творит шедевры: бариста, кондитеров, пекарей, шефов.',
+  },
+  {
+    slug: 'doronichi',
+    name: 'Дороничи',
+    bio: 'FOODZAVOD — инновационный для России завод по производству готовых блюд.',
+  },
+  {
+    slug: 'osq-group',
+    name: 'OSQ Group',
+    bio: 'Один из крупнейших российских производителей потребительской картонной упаковки для ресторанного бизнеса, ретейла и пищевых производств.',
+  },
+  {
+    slug: 'ilyinskoye-95',
+    name: 'ПК «Ильинское 95»',
+    bio: '«Ильинское 95» — производственный комбинат с богатой историей и традициями.',
+  },
+  {
+    slug: 'berta',
+    name: 'Берта',
+    bio: 'Группа компаний «Берта» — крупнейший российский производитель продукции для хлебопекарной и кондитерской промышленности.',
+  },
+  {
+    slug: 'erkonprodukt',
+    name: 'Эрконпродукт',
+    bio: 'ЭРКОНПРОДУКТ — крупный производитель сгущённого молока и начинок для кондитерской и хлебопекарной продукции.',
+  },
+  {
+    slug: 'ekomilk',
+    name: 'Экомилк',
+    bio: 'Визитная карточка «Экомилк» — сливочное масло, которое миллионы семей ценят за нежный молочный вкус и исключительно натуральный состав.',
+  },
+  {
+    slug: 'sparta',
+    name: 'Спарта',
+    bio: '«Спарта» — один из ведущих российских производителей продукции для кондитерской промышленности.',
+  },
+  {
+    slug: 'egida-povolzhye',
+    name: 'Эгида Поволжье',
+    bio: 'Завод компании «Эгида Поволжье» — одно из самых новейших производств России с современным оборудованием и технологиями.',
+  },
+  {
+    slug: 'alekseevsky-mkk',
+    name: 'Алексеевский молочноконсервный комбинат',
+    bio: 'ЗАО «Алексеевский молочноконсервный комбинат» — российский лидер по объёмам производства молочных консервов.',
+  },
+  {
+    slug: 'fabrika-sladkogo-dekora',
+    name: 'Фабрика сладкого декора',
+    bio: 'Российский производитель и поставщик ингредиентов для хлебозаводов, пекарен, кондитерских и предприятий HoReCa.',
+  },
+]
+
 function SubHeading({ label, title }: { label: string; title: string }) {
   return (
-    <div className="mb-6 flex items-baseline gap-4">
+    <div className="mb-8 flex items-baseline gap-4">
       <span className="font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
         {label}
       </span>
@@ -28,106 +226,120 @@ function SubHeading({ label, title }: { label: string; title: string }) {
   )
 }
 
-export async function CatalogEntryBlock() {
-  const [allCategories, segments, brands] = await Promise.all([
-    getCategoriesWithCounts(),
-    getSegments(),
-    getBrands(),
-  ])
-  // Скрываем категории без товаров — они выглядят как «дырки» в каталоге.
-  // Когда сидинг наполнится, они вернутся автоматически.
-  const categories = allCategories.filter((c) => c._count.products > 0)
-
+export function CatalogEntryBlock() {
   return (
     <section className="bg-warm px-[var(--container-px)] py-20 md:py-24">
       <div className="mx-auto max-w-container">
-        <div className="mb-12 flex items-end justify-between">
+        <div className="mb-14 flex items-end justify-between gap-6">
           <div>
-            <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-mist">
-              Каталог
+            <span className="mb-3 block font-sub text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
+              Познакомьтесь с нашим ассортиментом
             </span>
             <h2
               className="font-black uppercase tracking-[0.02em] text-ink"
               style={{ fontSize: 'var(--type-h2)', lineHeight: 1 }}
             >
-              Что у нас есть
+              Каталог ПАНЕМ
             </h2>
           </div>
           <Link
             href={'/catalog' as Route}
-            className="hidden text-[11px] font-bold uppercase tracking-[0.20em] text-stone transition-colors duration-150 hover:text-ink md:block"
+            className="hidden flex-shrink-0 text-[11px] font-bold uppercase tracking-[0.20em] text-stone transition-colors duration-150 hover:text-ink md:block"
           >
             Весь каталог →
           </Link>
         </div>
 
-        {/* Категории */}
-        <div className="mb-12">
-          <SubHeading label="0 1" title="По категории" />
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {categories.map((cat) => (
+        {/* Категории с подкатегориями */}
+        <div className="mb-20">
+          <SubHeading label="01" title="По категориям" />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/catalog/category/${cat.slug}` as Route}
-                className="group block rounded-card border border-sand bg-white p-4 transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:shadow-card"
-                style={{ borderTop: `3px solid ${`var(${cat.color})`}` }}
+                className="group flex flex-col rounded-card border border-sand bg-white p-7 transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:shadow-card"
+                style={{ borderTop: `3px solid ${cat.color}` }}
               >
-                <span className="mb-1 block text-[13px] font-bold uppercase tracking-[0.06em] text-ink">
-                  {cat.name}
-                </span>
-                <span className="text-[11px] text-mist">
-                  {cat._count.products}{' '}
-                  {pluralize(cat._count.products, ['товар', 'товара', 'товаров'])}
+                <div className="mb-5 flex items-baseline justify-between gap-3">
+                  <h4
+                    className="font-black uppercase text-ink"
+                    style={{
+                      fontSize: 'clamp(20px, 2vw, 28px)',
+                      lineHeight: 1.05,
+                      letterSpacing: '-0.005em',
+                    }}
+                  >
+                    {cat.name}
+                  </h4>
+                  <span className="flex-shrink-0 text-[12px] font-medium tabular-nums text-stone">
+                    {cat.count}{' '}
+                    {pluralize(cat.count, ['товар', 'товара', 'товаров'])}
+                  </span>
+                </div>
+
+                <ul className="flex-1 flex flex-wrap gap-x-1.5 gap-y-1.5 text-[13px] leading-snug text-stone">
+                  {cat.subs.map((sub, i) => (
+                    <li key={sub} className="inline">
+                      {sub}
+                      {i < cat.subs.length - 1 && (
+                        <span
+                          aria-hidden
+                          className="ml-1.5"
+                          style={{ color: cat.color }}
+                        >
+                          ·
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+                <span
+                  className="mt-6 inline-flex items-center text-[11px] font-bold uppercase tracking-[0.18em] transition-transform duration-200 group-hover:translate-x-1"
+                  style={{ color: cat.color }}
+                >
+                  Перейти →
                 </span>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Сегменты */}
-        <div className="mb-12">
-          <SubHeading label="0 2" title="По типу бизнеса" />
-          <div className="flex flex-wrap gap-2">
-            {segments.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/catalog/segment/${s.slug}` as Route}
-                className="inline-flex items-center gap-2 rounded-full border-[1.5px] px-5 py-2.5 text-[13px] font-medium text-ink transition-transform duration-200 hover:-translate-y-0.5"
-                style={{ background: s.colorL2, borderColor: s.colorL1 }}
-              >
-                {s.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Бренды */}
-        <div>
-          <SubHeading label="0 3" title="По производителю" />
-          <div className="flex flex-wrap gap-2">
-            {brands.map((b) => (
+        {/* Производители */}
+        <div className="mb-16">
+          <SubHeading label="02" title="По производителям" />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {BRANDS.map((b) => (
               <Link
                 key={b.slug}
                 href={`/catalog/brands/${b.slug}` as Route}
-                className="rounded-card border border-sand bg-white px-5 py-3 text-[14px] font-medium text-ink transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card"
+                className="group block rounded-card border border-sand bg-white p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card"
               >
-                {b.name}
-                {b.country && (
-                  <span className="ml-2 text-[11px] font-light text-mist">{b.country}</span>
-                )}
+                <h4
+                  className="mb-3 font-black uppercase text-ink"
+                  style={{
+                    fontSize: 'clamp(18px, 1.4vw, 22px)',
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.005em',
+                  }}
+                >
+                  {b.name}
+                </h4>
+                <p className="text-[13px] leading-relaxed text-stone">{b.bio}</p>
               </Link>
             ))}
           </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="mx-auto max-w-[560px] text-base leading-relaxed text-stone">
+        <div className="text-center">
+          <p className="mx-auto mb-6 max-w-[560px] text-base leading-relaxed text-stone">
             Не знаете, что выбрать?{' '}
             <span className="font-medium text-ink">
               Напишите задачу — технолог подберёт ингредиенты.
             </span>
           </p>
-          <div className="mt-6 flex justify-center">
+          <div className="flex justify-center">
             <Button href={'/support#contact' as Route} variant="secondary">
               Описать задачу
             </Button>
