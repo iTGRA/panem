@@ -8,6 +8,7 @@ interface Audience {
   href: Route
   colorL2: string
   colorL1: string
+  colorL3: string
   name: string
   role: string
   quote: string
@@ -25,6 +26,7 @@ const AUDIENCES: Audience[] = [
     href: '/catalog',
     colorL2: '#FFD291',
     colorL1: '#FFB45A',
+    colorL3: '#FCF0C8',
     name: 'Анна',
     role: 'Владелица кондитерской',
     quote:
@@ -46,6 +48,7 @@ const AUDIENCES: Audience[] = [
     href: '/academy',
     colorL2: '#FAC3D2',
     colorL1: '#F582A0',
+    colorL3: '#FFE1DC',
     name: 'Рита',
     role: 'Шеф-кондитер',
     quote:
@@ -62,6 +65,7 @@ const AUDIENCES: Audience[] = [
     href: '/consulting',
     colorL2: '#AACBFF',
     colorL1: '#5A8CD7',
+    colorL3: '#E6F0FF',
     name: 'Дмитрий',
     role: 'Управляющий рестораном',
     quote:
@@ -78,6 +82,7 @@ const AUDIENCES: Audience[] = [
     href: '/club',
     colorL2: '#A5D2DC',
     colorL1: '#6EA5AA',
+    colorL3: '#D7F0F5',
     name: 'Вадим',
     role: 'Ресторатор, 3 заведения',
     quote:
@@ -229,8 +234,13 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
       </div>
 
       <div
-        className="flex flex-col bg-white px-7 pb-7 pt-7"
-        style={{ minHeight: '320px' }}
+        className="flex flex-col bg-white px-7 pb-7 pt-7 transition-colors duration-500 ease-out group-hover:bg-[var(--card-hover-bg)]"
+        style={
+          {
+            minHeight: '320px',
+            '--card-hover-bg': a.colorL3,
+          } as React.CSSProperties
+        }
       >
         {/* Заголовок направления — самое важное в карточке */}
         <h3
