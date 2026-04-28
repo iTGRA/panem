@@ -31,7 +31,12 @@ const AUDIENCES: Audience[] = [
       'Раньше работала с тремя поставщиками. Теперь один. Всё есть, всегда в наличии.',
     initial: 'А',
     ctaLabel: 'Перейти в каталог',
-    usps: ['Более 2500 SKU', '50 производителей', 'Правильное хранение', 'Доставка'],
+    usps: [
+      '2 500+ SKU',
+      'Бесплатная доставка',
+      'Правильное хранение',
+      'Простой документооборот',
+    ],
     imageUrl: '/images/audiences/cafe_owner.jpg',
   },
   {
@@ -47,7 +52,7 @@ const AUDIENCES: Audience[] = [
       'После мастер-класса я переделала всю линейку тортов. Гости заметили сразу.',
     initial: 'Р',
     ctaLabel: 'Смотреть курсы',
-    usps: ['Демо-зона', 'Мастер-классы', 'Обучение', 'База знаний'],
+    usps: ['Демо-зона', 'Мастер-классы', 'База знаний', 'Обучение'],
     imageUrl: '/images/audiences/chef_conditer.jpg',
   },
   {
@@ -63,7 +68,7 @@ const AUDIENCES: Audience[] = [
       'Снизили фудкост с 38% до 28%. Меню и техкарты пересобрали за три месяца.',
     initial: 'Д',
     ctaLabel: 'Заказать проект',
-    usps: ['Запуск проекта', 'Перезапуск', 'Оптимизация', 'Масштабирование'],
+    usps: ['Запуск', 'Перезапуск', 'Масштабирование'],
     imageUrl: '/images/audiences/manager1.jpg',
   },
   {
@@ -79,7 +84,7 @@ const AUDIENCES: Audience[] = [
       'Здесь не продают — здесь делятся. Реальные решения от тех, кто уже прошёл этот путь.',
     initial: 'В',
     ctaLabel: 'Вступить в клуб',
-    usps: ['Мероприятия', 'Нетворкинг', 'Более 300 профессионалов'],
+    usps: ['Мероприятия', 'Нетворкинг', '300+ профессионалов в сообществе'],
     imageUrl: '/images/audiences/boss1.jpg',
   },
 ]
@@ -162,48 +167,40 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
       </div>
 
       <div
-        className="flex flex-col bg-white px-6 pb-6 pt-6"
-        style={{ minHeight: '280px' }}
+        className="flex flex-col bg-white px-7 pb-7 pt-7"
+        style={{ minHeight: '320px' }}
       >
-        <span
-          className="mb-5 flex items-center gap-2.5 font-sub font-bold uppercase text-stone"
-          style={{ fontSize: '13px', letterSpacing: '0.16em' }}
+        {/* Заголовок направления — самое важное в карточке */}
+        <h3
+          className="mb-5 font-main font-black uppercase text-ink"
+          style={{
+            fontSize: 'clamp(22px, 2.1vw, 32px)',
+            lineHeight: 1,
+            letterSpacing: '-0.01em',
+          }}
         >
-          <span
-            className="h-2 w-2 flex-shrink-0 rounded-full transition-transform duration-300 ease-out group-hover:scale-150"
-            style={{ background: a.colorL1 }}
-            aria-hidden="true"
-          />
-          {a.direction}
-        </span>
+          {a.heading}
+        </h3>
 
-        <blockquote
-          className="mb-3 flex-1 font-main leading-snug text-ink"
-          style={{ fontSize: 'clamp(13px, 1.2vw, 16px)', fontWeight: 500 }}
-        >
-          «{a.quote}»
-        </blockquote>
+        {/* УТП — bullet-лист с цветной точкой направления */}
+        <ul className="mb-6 flex flex-1 flex-col gap-2.5">
+          {a.usps.map((usp) => (
+            <li key={usp} className="flex items-center gap-2.5">
+              <span
+                aria-hidden
+                className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                style={{ background: a.colorL1 }}
+              />
+              <span className="text-[13px] leading-snug text-stone">{usp}</span>
+            </li>
+          ))}
+        </ul>
 
-        <div className="mb-5 text-right">
-          <div className="flex items-center justify-end gap-2">
-            <span
-              className="h-2 w-2 flex-shrink-0 rounded-full"
-              style={{ background: a.colorL1 }}
-            />
-            <span
-              className="font-bold text-ink"
-              style={{ fontSize: '13px', lineHeight: '1.2' }}
-            >
-              {a.name}
-            </span>
-          </div>
-          <span
-            className="mt-0.5 block"
-            style={{ fontSize: '11px', color: 'rgba(0,0,0,0.40)' }}
-          >
-            {a.role}
-          </span>
-        </div>
+        {/* Персона — компактная подпись (лицо уже есть на фото выше) */}
+        <p className="mb-5 text-[12px] leading-snug text-stone">
+          <span className="font-bold text-ink">{a.name}</span>
+          <span className="text-stone"> · {a.role}</span>
+        </p>
 
         <div className="mt-auto flex justify-center">
           <span
