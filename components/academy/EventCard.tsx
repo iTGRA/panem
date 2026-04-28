@@ -19,7 +19,7 @@ export function EventCard({ event }: { event: EventCardData }) {
 
   return (
     <article
-      className="flex flex-col rounded-card border border-sand bg-white transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:shadow-card"
+      className="group flex flex-col rounded-card border border-sand bg-white transition-[box-shadow,border-color] duration-300 ease-out hover:border-stone/30 hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.18)]"
       style={{ borderTop: `3px solid ${accent}` }}
     >
       <div
@@ -31,11 +31,11 @@ export function EventCard({ event }: { event: EventCardData }) {
           <img
             src={event.imageUrl}
             alt={event.title}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="text-[11px] text-mist">{label}</span>
+            <span className="text-[11px] text-stone">{label}</span>
           </div>
         )}
       </div>
@@ -94,10 +94,16 @@ export function EventCard({ event }: { event: EventCardData }) {
 
         <Link
           href={`/academy/events/${event.slug}` as Route}
-          className="mt-auto inline-block text-[9px] font-bold uppercase tracking-[0.18em]"
+          className="group/cta mt-auto inline-flex items-center gap-1 self-start text-[10px] font-bold uppercase tracking-[0.18em]"
           style={{ color: accent }}
         >
-          {cta} →
+          <span>{cta}</span>
+          <span
+            aria-hidden
+            className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1.5"
+          >
+            →
+          </span>
         </Link>
       </div>
     </article>

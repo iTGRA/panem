@@ -33,18 +33,25 @@ export function HeroBlock() {
         <div className="appear appear-d1 flex flex-wrap gap-3">
           <Link
             href="/catalog"
-            className="bg-ink px-7 py-3.5 font-main font-bold uppercase text-white transition-colors duration-200 hover:bg-stone"
+            className="group/cta inline-flex items-center gap-2 bg-ink px-7 py-3.5 font-main font-bold uppercase text-white shadow-none transition-all duration-300 ease-out hover:bg-stone hover:shadow-[0_10px_24px_-8px_rgba(0,0,0,0.4)]"
             style={{
               fontSize: '10px',
               letterSpacing: '0.22em',
               borderRadius: 'var(--r-xs)',
             }}
           >
-            Перейти в каталог
+            <span>Перейти в каталог</span>
+            <span
+              aria-hidden
+              className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1"
+              style={{ fontSize: '13px' }}
+            >
+              →
+            </span>
           </Link>
           <a
             href="#contact"
-            className="px-7 py-3.5 font-main font-bold uppercase text-stone transition-colors duration-200 hover:border-ink hover:text-ink"
+            className="group/sec relative inline-flex items-center overflow-hidden px-7 py-3.5 font-main font-bold uppercase text-stone transition-colors duration-300 hover:text-white"
             style={{
               fontSize: '10px',
               letterSpacing: '0.22em',
@@ -52,7 +59,11 @@ export function HeroBlock() {
               border: '1px solid var(--c-stone)',
             }}
           >
-            Стать партнёром
+            <span
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-0 origin-bottom bg-ink transition-[height] duration-300 ease-out group-hover/sec:h-full"
+            />
+            <span className="relative">Стать партнёром</span>
           </a>
         </div>
       </div>

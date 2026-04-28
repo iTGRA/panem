@@ -255,37 +255,47 @@ export function CatalogEntryBlock() {
           <SubHeading label="01" title="По категориям" />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {CATEGORIES.map((cat) => (
-              <Link
+              <article
                 key={cat.slug}
-                href={`/catalog/category/${cat.slug}` as Route}
-                className="group flex flex-col rounded-card border border-sand bg-white p-7 transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-0.5 hover:shadow-card"
+                className="group/card flex flex-col rounded-card border border-sand bg-white p-7 transition-[box-shadow,border-color] duration-300 ease-out hover:border-stone/30 hover:shadow-[0_18px_36px_-12px_rgba(0,0,0,0.18)]"
                 style={{ borderTop: `3px solid ${cat.color}` }}
               >
                 <div className="mb-5 flex items-baseline justify-between gap-3">
-                  <h4
-                    className="font-black uppercase text-ink"
-                    style={{
-                      fontSize: 'clamp(20px, 2vw, 28px)',
-                      lineHeight: 1.05,
-                      letterSpacing: '-0.005em',
-                    }}
+                  <Link
+                    href={`/catalog/category/${cat.slug}` as Route}
+                    className="group/title transition-colors duration-200"
                   >
-                    {cat.name}
-                  </h4>
+                    <h4
+                      className="font-black uppercase text-ink transition-colors duration-200 group-hover/title:text-stone"
+                      style={{
+                        fontSize: 'clamp(20px, 2vw, 28px)',
+                        lineHeight: 1.05,
+                        letterSpacing: '-0.005em',
+                      }}
+                    >
+                      {cat.name}
+                    </h4>
+                  </Link>
                   <span className="flex-shrink-0 text-[12px] font-medium tabular-nums text-stone">
                     {cat.count}{' '}
                     {pluralize(cat.count, ['товар', 'товара', 'товаров'])}
                   </span>
                 </div>
 
-                <ul className="flex-1 flex flex-wrap gap-x-1.5 gap-y-1.5 text-[13px] leading-snug text-stone">
+                <ul className="flex flex-1 flex-wrap gap-x-1.5 gap-y-1.5 text-[13px] leading-snug">
                   {cat.subs.map((sub, i) => (
                     <li key={sub} className="inline">
-                      {sub}
+                      <Link
+                        href={`/catalog/category/${cat.slug}` as Route}
+                        className="text-stone underline-offset-[3px] transition-colors duration-150 hover:text-ink hover:underline decoration-2"
+                        style={{ textDecorationColor: cat.color }}
+                      >
+                        {sub}
+                      </Link>
                       {i < cat.subs.length - 1 && (
                         <span
                           aria-hidden
-                          className="ml-1.5"
+                          className="ml-1.5 select-none"
                           style={{ color: cat.color }}
                         >
                           ·
@@ -295,13 +305,20 @@ export function CatalogEntryBlock() {
                   ))}
                 </ul>
 
-                <span
-                  className="mt-6 inline-flex items-center text-[11px] font-bold uppercase tracking-[0.18em] transition-transform duration-200 group-hover:translate-x-1"
+                <Link
+                  href={`/catalog/category/${cat.slug}` as Route}
+                  className="group/cta mt-6 inline-flex items-center gap-1.5 self-start text-[11px] font-bold uppercase tracking-[0.18em] transition-colors duration-200"
                   style={{ color: cat.color }}
                 >
-                  Перейти →
-                </span>
-              </Link>
+                  <span>Перейти к категории</span>
+                  <span
+                    aria-hidden
+                    className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1.5"
+                  >
+                    →
+                  </span>
+                </Link>
+              </article>
             ))}
           </div>
         </div>
@@ -314,10 +331,10 @@ export function CatalogEntryBlock() {
               <Link
                 key={b.slug}
                 href={`/catalog/brands/${b.slug}` as Route}
-                className="group block rounded-card border border-sand bg-white p-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card"
+                className="group block rounded-card border border-sand bg-white p-6 transition-[box-shadow,border-color] duration-300 ease-out hover:border-amber/40 hover:shadow-[0_14px_28px_-10px_rgba(0,0,0,0.16)]"
               >
                 <h4
-                  className="mb-3 font-black uppercase text-ink"
+                  className="mb-3 font-black uppercase text-ink transition-colors duration-300 group-hover:text-amber"
                   style={{
                     fontSize: 'clamp(18px, 1.4vw, 22px)',
                     lineHeight: 1.1,

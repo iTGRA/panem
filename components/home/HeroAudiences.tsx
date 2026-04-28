@@ -116,8 +116,10 @@ function delayClassFor(index: number): string {
   return ['appear', 'appear-d1', 'appear-d2', 'appear-d3'][index] ?? 'appear'
 }
 
+// Карточка не двигается сама — реагируют её внутренности.
+// Фото "наезжает" (Ken Burns), pill-CTA вырастает, точка-маркер пульсирует.
 const CARD_BASE =
-  'group relative flex cursor-pointer flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1'
+  'group relative flex cursor-pointer flex-col overflow-hidden'
 
 const CARD_SHELL: React.CSSProperties = {
   minHeight: 'clamp(580px, 70vh, 780px)',
@@ -153,7 +155,7 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
             <img
               src={a.imageUrl}
               alt={a.name}
-              className="absolute inset-0 h-full w-full object-cover object-top"
+              className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
             />
           )}
         </div>
@@ -168,7 +170,7 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
           style={{ fontSize: '13px', letterSpacing: '0.16em' }}
         >
           <span
-            className="h-2 w-2 flex-shrink-0 rounded-full"
+            className="h-2 w-2 flex-shrink-0 rounded-full transition-transform duration-300 ease-out group-hover:scale-150"
             style={{ background: a.colorL1 }}
             aria-hidden="true"
           />
@@ -205,7 +207,7 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
 
         <div className="mt-auto flex justify-center">
           <span
-            className="inline-flex items-center gap-2 rounded-full px-5 py-3 transition-all duration-200 group-hover:brightness-95"
+            className="inline-flex items-center gap-2 rounded-full px-5 py-3 shadow-none transition-all duration-300 ease-out group-hover:scale-[1.06] group-hover:shadow-[0_10px_24px_-6px_rgba(0,0,0,0.22)]"
             style={{ background: a.colorL1 }}
           >
             <span
@@ -215,7 +217,7 @@ function PhotoCard({ audience: a, index }: { audience: Audience; index: number }
               {a.ctaLabel}
             </span>
             <span
-              className="font-bold text-white transition-transform duration-200 group-hover:translate-x-0.5"
+              className="font-bold text-white transition-transform duration-300 ease-out group-hover:translate-x-1"
               style={{ fontSize: '14px' }}
             >
               →
